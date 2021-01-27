@@ -59,6 +59,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     info.changeLifeBy(-1)
     otherSprite.destroy()
 })
+let myFuel: Sprite = null
 let myEnemy: Sprite = null
 let projectile: Sprite = null
 let mySprite: Sprite = null
@@ -85,6 +86,26 @@ controller.moveSprite(mySprite)
 mySprite.setFlag(SpriteFlag.StayInScreen, true)
 let statusbar = statusbars.create(20, 4, StatusBarKind.Energy)
 statusbar.attachToSprite(mySprite, -25, 0)
+game.onUpdateInterval(5000, function () {
+    myFuel = sprites.createProjectileFromSide(img`
+        . . . . . . b b b b a a . . . . 
+        . . . . b b d d d 3 3 3 a a . . 
+        . . . b d d d 3 3 3 3 3 3 a a . 
+        . . b d d 3 3 3 3 3 3 3 3 3 a . 
+        . b 3 d 3 3 3 3 3 b 3 3 3 3 a b 
+        . b 3 3 3 3 3 a a 3 3 3 3 3 a b 
+        b 3 3 3 3 3 a a 3 3 3 3 d a 4 b 
+        b 3 3 3 3 b a 3 3 3 3 3 d a 4 b 
+        b 3 3 3 3 3 3 3 3 3 3 d a 4 4 e 
+        a 3 3 3 3 3 3 3 3 3 d a 4 4 4 e 
+        a 3 3 3 3 3 3 3 d d a 4 4 4 e . 
+        a a 3 3 3 d d d a a 4 4 4 e e . 
+        . e a a a a a a 4 4 4 4 e e . . 
+        . . e e b b 4 4 4 4 b e e . . . 
+        . . . e e e e e e e e . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, 0, 50)
+})
 game.onUpdateInterval(1000, function () {
     myEnemy = sprites.createProjectileFromSide(img`
         ...........ccccc66666...........
