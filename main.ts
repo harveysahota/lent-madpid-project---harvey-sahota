@@ -62,6 +62,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Gas, function (sprite, otherSpri
     statusbar.value = 100
     otherSprite.destroy()
 })
+statusbars.onZero(StatusBarKind.Energy, function (status) {
+    game.over(false)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
     otherSprite.destroy()
