@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Gas = SpriteKind.create()
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
         ................
@@ -55,6 +58,10 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, oth
     myEnemy.destroy()
     projectile.destroy()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Gas, function (sprite, otherSprite) {
+    statusbar.value = 100
+    otherSprite.destroy()
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
     otherSprite.destroy()
@@ -62,6 +69,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let myFuel: Sprite = null
 let myEnemy: Sprite = null
 let projectile: Sprite = null
+let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
 effects.starField.startScreenEffect()
 mySprite = sprites.create(img`
@@ -84,7 +92,7 @@ mySprite = sprites.create(img`
     `, SpriteKind.Player)
 controller.moveSprite(mySprite)
 mySprite.setFlag(SpriteFlag.StayInScreen, true)
-let statusbar = statusbars.create(20, 4, StatusBarKind.Energy)
+statusbar = statusbars.create(20, 4, StatusBarKind.Energy)
 statusbar.attachToSprite(mySprite, -25, 0)
 game.onUpdateInterval(5000, function () {
     myFuel = sprites.createProjectileFromSide(img`
@@ -106,6 +114,7 @@ game.onUpdateInterval(5000, function () {
         . . . . . . . . . . . . . . . . 
         `, 0, 50)
     myFuel.x = randint(5, 155)
+    myFuel.setKind(SpriteKind.Gas)
 })
 game.onUpdateInterval(1000, function () {
     myEnemy = sprites.createProjectileFromSide(img`
