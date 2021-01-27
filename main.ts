@@ -83,6 +83,8 @@ mySprite = sprites.create(img`
     `, SpriteKind.Player)
 controller.moveSprite(mySprite)
 mySprite.setFlag(SpriteFlag.StayInScreen, true)
+let statusbar = statusbars.create(20, 4, StatusBarKind.Energy)
+statusbar.attachToSprite(mySprite, -25, 0)
 game.onUpdateInterval(1000, function () {
     myEnemy = sprites.createProjectileFromSide(img`
         ...........ccccc66666...........
@@ -120,4 +122,7 @@ game.onUpdateInterval(1000, function () {
         `, 0, 50)
     myEnemy.x = randint(5, 155)
     myEnemy.setKind(SpriteKind.Enemy)
+})
+game.onUpdateInterval(300, function () {
+    statusbar.value += -1
 })
